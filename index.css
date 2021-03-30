@@ -1,0 +1,28 @@
+.posters {
+    text-align: center;
+    border: grey solid 1px;
+    /*height needs to be 1.5 times width */
+    width: 20rem;
+    height: 30rem;
+    display: inline-grid;
+    margin: 1rem 2rem;
+    box-shadow: 3px 4px black
+  }
+
+  #nav-bar span {
+    height: 80%;
+    width: 8vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 5em;
+    border: 5px solid black;
+  }
+
+  #nav-bar {
+    height: 15vh;
+    background: red;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
