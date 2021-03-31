@@ -1,6 +1,7 @@
 let movieCollection = document.querySelector("#movies-container")
 let movieNav = document.querySelector("#nav-bar")
 let movieNavButtons = document.querySelectorAll(".clickables")
+let currentPage = document.querySelector("#current-page")
 
 console.log(movieNavButtons)
 
@@ -42,6 +43,7 @@ fetch("http://localhost:3000/movies")
 
  movieNavButtons.forEach(item => {
     item.addEventListener('click', function(){
-       console.log(item)
+        console.log(item)
+      currentPage.innerText = item.innerText
         })
     })
