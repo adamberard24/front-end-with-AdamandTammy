@@ -2,16 +2,20 @@ let movieCollection = document.querySelector("#movies-container")
 let movieNav = document.querySelector("#nav-bar")
 let movieNavButtons = document.querySelectorAll(".clickables")
 let currentPage = document.querySelector("#current-page")
+let newMovieForm = document.querySelector("#user-input")
+let genreSelect = document.querySelector("#genreId")
 
-console.log(movieNavButtons)
-
-fetch("http://localhost:3000/movies")
+function populatePage(){fetch("http://localhost:3000/movies")
     .then(res => res.json())
     .then(function(moviesArr){
+        movieCollection.innerHTML = " "
         moviesArr.forEach(function(movieObject){
            turnMovieToPosterEntry(movieObject)
         })
-    })
+    })}
+
+
+populatePage()
 
     function turnMovieToPosterEntry(movie){
         let movieEntryDiv = document.createElement("div")
@@ -40,6 +44,48 @@ fetch("http://localhost:3000/movies")
         movieCollection.append(movieEntryDiv)
     }
 
+    fetch("http://localhost:3000/genres?_embed=movies")
+       .then(res => res.json())
+       .then(function(genreArr){
+           genreArr.forEach(function(genreObj){
+           turnGenreIntoButton(genreObj)
+           turnGenreIntoOption(genreObj)
+       })
+    })
+       function turnGenreIntoButton(genreObj){
+           let genreSpan = document.createElement("span")
+            genreSpan.className = "clickables"
+            genreSpan.innerText = genreObj.name
+            
+            movieNav.append(genreSpan)
+
+            let genreID = genreObj.id
+            
+            genreSpan.addEventListener("click", function(){
+                currentPage.innerText = genreObj.name
+                fetch(`http://localhost:3000/genres/${genreID}/?_embed=movies`)
+                .then(res => res.json())
+                .then(function(genreObj){
+                    movieCollection.innerHTML = " "
+                    let moviesInSpecificGenre = genreObj.movies
+                      moviesInSpecificGenre.forEach(function(movieObject) {
+                        turnMovieToPosterEntry(movieObject)
+                    })
+                })
+
+            })
+
+          
+        }
+
+ let allMovies = document.querySelector(".clickables")
+ 
+ allMovies.addEventListener('click', function(){
+ populatePage()
+
+ }
+ 
+ )
 
  movieNavButtons.forEach(item => {
     item.addEventListener('click', function(){
@@ -47,3 +93,20 @@ fetch("http://localhost:3000/movies")
       currentPage.innerText = item.innerText
         })
     })
+
+    function populatePage(){fetch("http://localhost:3000/movies")
+    .then(res => res.json())
+    .then(function(moviesArr){
+        movieCollection.innerHTML = " "
+        moviesArr.forEach(function(movieObject){
+           turnMovieToPosterEntry(movieObject)
+        })
+    })}
+
+    function turnGenreIntoOption(genreObj){
+        let genreOption = document.createElement("option")
+        genreOption.innerText = genreObj.name
+        genreOption.value = genreObj.id
+
+        genreSelect.append(genreOption)
+    }
