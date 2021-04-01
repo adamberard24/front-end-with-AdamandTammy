@@ -1,3 +1,31 @@
+body {
+  background: #9C81C9;
+  height: 100%;
+  font-family: arial;
+}
+h1 {
+  font-size: 120pt;
+  text-align: center;
+  margin: 0px;;
+  text-transform: uppercase;
+  letter-spacing: -6px;
+  line-height: 100px;
+  font-weight: normal;
+}
+h2 {
+  font-size: 28pt;
+  font-weight: normal;
+  text-align: center;
+  letter-spacing: -2px;
+  margin: 0px;
+  background: black;
+  color: white;
+  border-radius: 10px 10px 0px 0px;
+}
+.clickables {
+  text-align: center;
+  border-bottom: solid 8px;
+}
 .posters {
     text-align: center;
     border: grey solid 1px;
@@ -8,21 +36,27 @@
     margin: 1rem 2rem;
     box-shadow: 3px 4px black
   }
-
-  #nav-bar span {
+  span {
     height: 80%;
-    width: 8vw;
+    /*width: 175px;*/
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 5em;
-    border: 5px solid black;
+    /*border: solid black;
+    border-radius: 10px;*/
+    padding: 3px;
   }
-
+  span:hover {
+    color: #222124;
+    text-transform: uppercase;
+    border-bottom: solid 8px white;
+    font-weight: bold;
+  }
   #nav-bar {
-    height: 15vh;
-    background: red;
+    height: 90px;
+    background:#5a5561;
     display: flex;
     justify-content: space-around;
     align-items: center;
+    border-radius: 0px 0px 10px 10px;
   }

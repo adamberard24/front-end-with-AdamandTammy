@@ -4,6 +4,9 @@ let movieNavButtons = document.querySelectorAll(".clickables")
 let currentPage = document.querySelector("#current-page")
 let newMovieForm = document.querySelector("#user-input")
 let genreSelect = document.querySelector("#genreId")
+let createNewMovieForm = document.querySelector(".add-a-movie")
+let titleInput = document.querySelector("#new-title")
+let posterInput = document.querySelector("#new-poster")
 
 function populatePage(){fetch("http://localhost:3000/movies")
     .then(res => res.json())
@@ -110,3 +113,33 @@ populatePage()
 
         genreSelect.append(genreOption)
     }
+
+
+    createNewMovieForm.addEventListener("submit", function(evt){
+        evt.preventDefault()
+        let newMovieTitle = titleInput.value
+        let newMoviePoster = posterInput.value
+
+
+    })
+
+    // function handleNewMovieForm(evt){
+    //     evt.prevendDefault
+
+    //     let movieTitle = evt.target.movies.title
+
+    //    fetch("http://localhost:3000/movies", {
+    //     method: "POST",
+    //     headers: {
+    //         "Content-Type": "application/json"
+    //     },
+    //     body: JSON.stringify({
+    //         movieTitle: title
+    //     })
+    //    })
+    //    .then(res => res.json())
+    //    .then(function(newMovie){
+
+    //    })
+
+    // }
