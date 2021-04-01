@@ -7,6 +7,10 @@ let genreSelect = document.querySelector("#genreId")
 let createNewMovieForm = document.querySelector(".add-a-movie")
 let titleInput = document.querySelector("#new-title")
 let posterInput = document.querySelector("#new-poster")
+let trailerInput = document.querySelector("#new-trailer")
+let globalGenres = []
+let newMovieAdd = false
+
 
 function populatePage(){fetch("http://localhost:3000/movies")
     .then(res => res.json())
@@ -32,6 +36,15 @@ populatePage()
         movieImage.className = "posters"
         movieImage.alt = movie.title
 
+        let movieTrailer = document.createElement("iframe")
+        movieTrailer.src = movie.trailer
+        movieTrailer.height = "600"
+        movieTrailer.width = "900"
+        movieTrailer.title = "trailer"
+
+        let movieTrailerSource = document.createElement("source")
+        movieTrailerSource.src = movie.trailer
+
         let movieViews = document.createElement("p")
         movieViews.innerText = `Views: ${movie.views}`
 
@@ -40,16 +53,33 @@ populatePage()
         deleteButton.innerText = "X"
 
 
-        //let movieTrailer = document.createElement("iframe")
-        //movieTrailer.src = movie.trailer
     
-        movieEntryDiv.append(deleteButton, movieTitleH2, movieImage, movieViews) //movieTrailer)
+        movieEntryDiv.append(movieTitleH2, deleteButton, movieImage, movieViews) 
         movieCollection.append(movieEntryDiv)
+
+        movieImage.addEventListener('click', function(evt){
+           movieImage.remove()
+           movieEntryDiv.append(movieTrailer)
+    
+        })
+
+        deleteButton.addEventListener("click", function(evt){
+
+            fetch(`http://localhost:3000/movies/${movie.id}`, {
+                method: "DELETE"
+            })
+                .then(res => res.json())
+                .then(function(emptyObj){
+                    movieEntryDiv.remove()
+                })
+        })
+    
     }
 
     fetch("http://localhost:3000/genres?_embed=movies")
        .then(res => res.json())
        .then(function(genreArr){
+           globalGenres = [...genreArr]
            genreArr.forEach(function(genreObj){
            turnGenreIntoButton(genreObj)
            turnGenreIntoOption(genreObj)
@@ -65,15 +95,26 @@ populatePage()
             let genreID = genreObj.id
             
             genreSpan.addEventListener("click", function(){
-                currentPage.innerText = genreObj.name
+
+               
+
                 fetch(`http://localhost:3000/genres/${genreID}/?_embed=movies`)
                 .then(res => res.json())
                 .then(function(genreObj){
                     movieCollection.innerHTML = " "
+                    createNewMovieForm.style.display = "none"
                     let moviesInSpecificGenre = genreObj.movies
+
                       moviesInSpecificGenre.forEach(function(movieObject) {
                         turnMovieToPosterEntry(movieObject)
+
+
+                       
                     })
+
+                   
+
+                    
                 })
 
             })
@@ -85,6 +126,8 @@ populatePage()
  
  allMovies.addEventListener('click', function(){
  populatePage()
+
+ createNewMovieForm.style.display = "block"
 
  }
  
@@ -119,27 +162,39 @@ populatePage()
         evt.preventDefault()
         let newMovieTitle = titleInput.value
         let newMoviePoster = posterInput.value
+        let newMovieTrailer = trailerInput.value
+        let newMoviesGenre = genreSelect.value
+        fetch("http://localhost:3000/movies", {
 
+        method: "POST",
+        headers: {
+            "Content-Type": "Application/json"
+        },
+        body: JSON.stringify({
+            title: newMovieTitle,
+            poster: newMoviePoster,
+            trailer: newMovieTrailer,
+            views: 0,
+            genreId: parseInt(newMoviesGenre)
 
+        })
+        })
+        .then(res => res.json())
+        .then(function(newMovie){
+
+           let foundGenre = globalGenres.find(function(genrePojo){
+                return genrePojo.id === parseInt(newMoviesGenre)
+
+            })
+
+            let copyOfMovie = [...foundGenre.movies, newMovie]
+// set found genres (genre found on line 145) movies to be the copy of movie
+                foundGenre.movies = copyOfMovie
+                
+                turnMovieToPosterEntry(newMovie)
+        })
     })
 
-    // function handleNewMovieForm(evt){
-    //     evt.prevendDefault
 
-    //     let movieTitle = evt.target.movies.title
 
-    //    fetch("http://localhost:3000/movies", {
-    //     method: "POST",
-    //     headers: {
-    //         "Content-Type": "application/json"
-    //     },
-    //     body: JSON.stringify({
-    //         movieTitle: title
-    //     })
-    //    })
-    //    .then(res => res.json())
-    //    .then(function(newMovie){
-
-    //    })
-
-    // }
+    

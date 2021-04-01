@@ -10,67 +10,61 @@
 </head>
 <body>
 
+   
+<h1 id="current-page">All Movies</h1>
+<h2>(but only from 2004)</h2>
+    
+
     <!--Selection at top with different categories from website-->
-<div id="nav-bar">
-<span class="clickables">All Movies (but only from 2004)</span>    
+<div id="nav-bar" class="sidenav">
+<span id= "main-page" class="clickables">All Movies</span>    
 </div>
 
 
+
+
 <form class="add-a-movie">
-<h3>Add New Movies to our database here!!!</h3>
-<h6>(but it better be from 2004 or we'll block your ip)</h6>
+<h3>Add New Movies to Database</h3>
 <select name= "genreId" id="genreId">
 
-
+<option>Category:</option>
 
 </select>
+<br>
 <input 
 type="text",
 name="Movie Title",
 value="",
-placeholder="Enter a movie (from 2004) here...",
+placeholder="Movie Title (from 2004)",
 class="input-text"
 id="new-title"
 />
-
-<br />
+<br>
 
 <input
 type="text",
 name="Movie Poster",
 value="",
-placeholder="Enter a movie's Poster URL here...",
+placeholder="Movie Poster URL",
 class="input-text"
 id="new-poster"
 />
-
-<br />
-
+<br>
 <input
 type="text",
 name="Movie Trailer",
 value="",
-placeholder="Enter a movie trailer URL here...",
+placeholder="Movie Trailer URL",
 class="input-text"
+id="new-trailer"
 
 />
-
-<br />
-
-<input
-type="text",
-name="Movie Trailer",
-value="",
-placeholder="Enter a movie trailer URL here...",
-class="input-text"
-/>
-
-<br />
+<br>
 
 <input
  type="submit"
  type="submit"
- value="Add movie to database"
+ value="Add movie"
  class="submit"
  />
 
@@ -78,11 +72,10 @@ class="input-text"
 </form>
 
 
-<div>
-    <h1 id="current-page">All Movies (but only from 2004)</h1>
-</div>
-
 <!--Here's where our movies on each page will populate--> 
 <div id="movies-container"></div>
+
+
+</div>
 </body>
 </html>

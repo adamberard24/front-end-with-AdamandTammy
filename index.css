@@ -2,10 +2,11 @@ body {
   background: #9C81C9;
   height: 100%;
   font-family: arial;
+  text-align: right;
 }
 h1 {
   font-size: 120pt;
-  text-align: center;
+  text-align: right;
   margin: 0px;;
   text-transform: uppercase;
   letter-spacing: -6px;
@@ -15,38 +16,56 @@ h1 {
 h2 {
   font-size: 28pt;
   font-weight: normal;
-  text-align: center;
+  text-align: right;
   letter-spacing: -2px;
   margin: 0px;
   background: black;
   color: white;
   border-radius: 10px 10px 0px 0px;
 }
-.clickables {
+h3 {
+  text-align: center;
+}
+/* span.clickables {
   text-align: center;
   border-bottom: solid 8px;
-}
-.posters {
-    text-align: center;
-    border: grey solid 1px;
+}  */
+img {
+    display:inline-block;
+    padding: 20px;
+    /* border: grey solid 1px; */
     /*height needs to be 1.5 times width */
     width: 20rem;
     height: 30rem;
-    display: inline-grid;
-    margin: 1rem 2rem;
+    /* display: inline-grid; */
+    margin: auto;
     box-shadow: 3px 4px black
+    padding
   }
-  span {
+
+  iframe {
+    display:inline-block;
+    padding: 20px;
+    /* border: grey solid 1px; */
+    /*height needs to be 1.5 times width */
+  
+    /* display: inline-grid; */
+    margin: auto;
+    outline: none
+    padding
+
+  }
+/* span {
     height: 80%;
-    /*width: 175px;*/
+    width: 175px;
     display: flex;
     justify-content: center;
     align-items: center;
-    /*border: solid black;
-    border-radius: 10px;*/
+    border: solid black;
+    border-radius: 10px;
     padding: 3px;
-  }
-  span:hover {
+  } */
+  /*span:hover {
     color: #222124;
     text-transform: uppercase;
     border-bottom: solid 8px white;
@@ -59,4 +78,76 @@ h2 {
     justify-content: space-around;
     align-items: center;
     border-radius: 0px 0px 10px 10px;
-  }
+  } */
+#nav-bar {
+  height: 100%;
+  width: 160px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+span, .clickables {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+}
+.sidenav span:hover {
+  color: #F1F1F1;
+}
+  /* .main {
+    margin-left: 160px; /* Same as the width of the sidenav */
+    /* font-size: 28px; /* Increased text to enable scrolling */
+    /* padding: 0px 10px;
+  } */
+  /* @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav span {font-size: 18px;}
+  }  */
+/* width */
+::-webkit-scrollbar {
+  width: 25px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+  color: white;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: black;
+  border-radius: 10px;
+}
+select {
+  /* width: 100px; */
+  border: black 5px solid;
+  font: arial;
+  font-weight: bold;
+  font-size: 12pt;
+  display: block;
+  margin: 0 auto;
+}
+input {
+  border: black 5px solid;
+  font: arial;
+  font-weight: bold;
+  font-size: 12pt;
+  display:block;
+  margin: 0 auto;
+}
+input[type=text] {
+  width: 20%;
+  box-sizing: border-box;
+}
+input[type=submit] {
+  padding: 10px;
+  display: block;
+  margin: 0 auto;
+  width: 150px;
+}
