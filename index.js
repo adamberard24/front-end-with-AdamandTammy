@@ -96,7 +96,8 @@ populatePage()
             
             genreSpan.addEventListener("click", function(){
 
-               
+                currentPage.innerText = genreObj.name
+
 
                 fetch(`http://localhost:3000/genres/${genreID}/?_embed=movies`)
                 .then(res => res.json())
