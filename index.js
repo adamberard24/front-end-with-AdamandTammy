@@ -12,7 +12,7 @@ let globalGenres = []
 let newMovieAdd = false
 
 
-function populatePage(){fetch("http://localhost:3000/movies?_sort=title")
+function populatePage(){fetch("http://glacial-brook-56635.herokuapp.com/movies?_sort=title")
     .then(res => res.json())
     .then(function(moviesArr){
         movieCollection.innerHTML = " "
@@ -70,7 +70,7 @@ populatePage()
            movieImage.remove()
            movieEntryDiv.append(movieTrailer, movieViews)
 
-           fetch(`http://localhost:3000/movies/${currentID}`, {
+           fetch(`http://glacial-brook-56635.herokuapp.com/movies/${currentID}`, {
             method: "PATCH",
             headers: {
                 'Content-Type': 'application/json',
@@ -92,7 +92,7 @@ populatePage()
 
         deleteButton.addEventListener("click", function(evt){
 
-            fetch(`http://localhost:3000/movies/${movie.id}`, {
+            fetch(`http://glacial-brook-56635.herokuapp.com/movies/${movie.id}`, {
                 method: "DELETE"
             })
                 .then(res => res.json())
@@ -103,7 +103,7 @@ populatePage()
     
     }
 
-    fetch("http://localhost:3000/genres?_embed=movies")
+    fetch("http://glacial-brook-56635.herokuapp.com/genres?_embed=movies")
        .then(res => res.json())
        .then(function(genreArr){
            globalGenres = [...genreArr]
@@ -126,7 +126,7 @@ populatePage()
                 currentPage.innerText = genreObj.name
 
 
-                fetch(`http://localhost:3000/genres/${genreID}/?_embed=movies`)
+                fetch(`http://glacial-brook-56635.herokuapp.com/genres/${genreID}/?_embed=movies`)
                 .then(res => res.json())
                 .then(function(genreObj){
                     movieCollection.innerHTML = " "
@@ -194,7 +194,7 @@ populatePage()
         let newMoviesGenre = genreSelect.value
 
         createNewMovieForm.reset()
-        fetch("http://localhost:3000/movies", {
+        fetch("http://glacial-brook-56635.herokuapp.com/movies", {
 
         method: "POST",
         headers: {
