@@ -12,10 +12,12 @@ let globalGenres = []
 let newMovieAdd = false
 
 
-function populatePage(){fetch("http://localhost:3000/movies")
+function populatePage(){fetch("http://localhost:3000/movies?_sort=title")
     .then(res => res.json())
     .then(function(moviesArr){
         movieCollection.innerHTML = " "
+    
+        console.log(moviesArr)
         moviesArr.forEach(function(movieObject){
            turnMovieToPosterEntry(movieObject)
         })
@@ -36,6 +38,11 @@ populatePage()
         movieImage.className = "posters"
         movieImage.alt = movie.title
 
+        let moviePosterDiv = document.createElement("div")
+        moviePosterDiv.className = "poster-container"
+
+        moviePosterDiv.append(movieImage)
+
         let movieTrailer = document.createElement("iframe")
         movieTrailer.src = movie.trailer
         movieTrailer.height = "600"
@@ -46,20 +53,40 @@ populatePage()
         movieTrailerSource.src = movie.trailer
 
         let movieViews = document.createElement("p")
-        movieViews.innerText = `Views: ${movie.views}`
+        movieViews.innerText = `Trailer Views: ${movie.views}`
 
         let deleteButton = document.createElement("button")
         deleteButton.className = "delete-button"
         deleteButton.innerText = "X"
 
+        let currentID = movie.id
+
 
     
-        movieEntryDiv.append(movieTitleH2, deleteButton, movieImage, movieViews) 
+        movieEntryDiv.append(movieTitleH2, deleteButton, moviePosterDiv) 
         movieCollection.append(movieEntryDiv)
 
         movieImage.addEventListener('click', function(evt){
            movieImage.remove()
-           movieEntryDiv.append(movieTrailer)
+           movieEntryDiv.append(movieTrailer, movieViews)
+
+           fetch(`http://localhost:3000/movies/${currentID}`, {
+            method: "PATCH",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                views: movie.views + 1
+            }) 
+        })
+            .then(res => res.json())
+            .then(function(updatedmovie){
+                
+                movie = updatedmovie
+                
+                movieViews.innerText = `Trailer Views: ${updatedmovie.views}`
+    
+            })
     
         })
 
@@ -141,14 +168,14 @@ populatePage()
         })
     })
 
-    function populatePage(){fetch("http://localhost:3000/movies")
-    .then(res => res.json())
-    .then(function(moviesArr){
-        movieCollection.innerHTML = " "
-        moviesArr.forEach(function(movieObject){
-           turnMovieToPosterEntry(movieObject)
-        })
-    })}
+    // function populatePage(){fetch("http://localhost:3000/movies")
+    // .then(res => res.json())
+    // .then(function(moviesArr){
+    //     movieCollection.innerHTML = " "
+    //     moviesArr.forEach(function(movieObject){
+    //        turnMovieToPosterEntry(movieObject)
+    //     })
+    // })}
 
     function turnGenreIntoOption(genreObj){
         let genreOption = document.createElement("option")
@@ -165,6 +192,8 @@ populatePage()
         let newMoviePoster = posterInput.value
         let newMovieTrailer = trailerInput.value
         let newMoviesGenre = genreSelect.value
+
+        createNewMovieForm.reset()
         fetch("http://localhost:3000/movies", {
 
         method: "POST",
